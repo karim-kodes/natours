@@ -2,8 +2,10 @@ const express = require('express');
 const tourRoutes = express.Router();
 const tourController = require('./../Controllers/tourController');
 const authController = require('./../Controllers/authController');
-
+const reviewRouter = require('./reviewRoutes');
 //ROUTES
+
+tourRoutes.use('/:tourId/reviews', reviewRouter);
 // Top 5 cheapest
 tourRoutes
   .route('/top-5-cheap')
@@ -25,5 +27,8 @@ tourRoutes
     authController.restrictTo('admin', 'lead-guide'),
     tourController.deleteTour
   );
+
+// Nested Routes
+//
 
 module.exports = tourRoutes;

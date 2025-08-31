@@ -11,6 +11,7 @@ const globalErrorHandler = require('./Controllers/errorController');
 const qs = require('qs');
 const tourRoutes = require('./Routes/tourRoutes');
 const userRoutes = require('./Routes/userRoutes');
+const reviewRoutes = require('./Routes/reviewRoutes');
 const app = express();
 
 app.set('query parser', (str) => qs.parse(str));
@@ -69,6 +70,7 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/tours', tourRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/reviews', reviewRoutes);
 
 app.all('*', (req, res, next) => {
   // const err = new Error(`can't find ${req.originalUrl} on this server!!`);
