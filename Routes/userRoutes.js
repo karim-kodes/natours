@@ -9,19 +9,21 @@ userRoutes.post('/login', authController.login);
 userRoutes.post('/forgotpassword', authController.forgotPassword);
 userRoutes.patch('/resetpassword/:token', authController.resetPassword);
 
-userRoutes.patch(
-  '/updateMyPassword',
-  authController.protect,
-  authController.updatePassword
-);
+// Proctect Routes
+userRoutes.use(authController.protect);
 
-userRoutes.patch('/updateMe', authController.protect, userController.updateMe);
-userRoutes.delete('/deleteMe', authController.protect, userController.deleteMe);
+userRoutes.patch('/updateMyPassword', authController.updatePassword);
+userRoutes.get('/me', userController.getMe, userController.getUser);
+userRoutes.patch('/updateMe', userController.updateMe);
+userRoutes.delete('/deleteMe', userController.deleteMe);
+
+userRoutes.use(authController.restrictTo('admin'));
 
 userRoutes
   .route('/')
-  .get(userController.getAllUsers)
+  .get(authController.restrictTo('admin'), userController.getAllUsers)
   .post(userController.createUser);
+
 userRoutes
   .route('/:id')
   .get(userController.getUser)

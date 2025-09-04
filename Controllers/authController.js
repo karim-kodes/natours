@@ -72,6 +72,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
   // 3. if everything is okay send the token  to client
   createSendToken(user, 200, res);
+  console.log(user.role);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
